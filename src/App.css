@@ -140,6 +140,69 @@
   border: 1px solid var(--border);
 }
 
+.video-wrapper {
+  margin-top: 14px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #111;
+}
+
+.video-actions {
+  margin-top: 14px;
+}
+
+.small-btn {
+  padding: 8px 12px;
+  font-size: 0.95rem;
+}
+
+.video-wrapper video,
+.video-frame {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #111;
+}
+
+.video-frame {
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+.video-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 20;
+}
+
+.video-modal {
+  width: min(900px, 100%);
+  background: white;
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.video-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.video-fallback {
+  margin-top: 10px;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
 .card-accent {
   height: 8px;
   width: 64px;

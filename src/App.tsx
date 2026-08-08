@@ -1,4 +1,9 @@
+import { useState } from 'react'
 import './App.css'
+
+const featuredVideoUrl =
+  import.meta.env.VITE_YOUTUBE_VIDEO_URL ||
+  'https://www.youtube.com/embed/YOUR_VIDEO_ID'
 
 const websiteProjects = [
   {
@@ -6,6 +11,7 @@ const websiteProjects = [
     type: 'Website project',
     description:
       'A bold editorial-style site with immersive motion and a clear conversion path.',
+    videoUrl: featuredVideoUrl,
   },
   {
     title: 'Community App Dashboard',
@@ -35,6 +41,7 @@ const artworkPieces = [
 
 function App() {
   const currentYear = new Date().getFullYear()
+  const [selectedVideoUrl, setSelectedVideoUrl] = useState<string | null>(null)
 
   return (
     <div className="portfolio-shell">
@@ -79,6 +86,18 @@ function App() {
                 <p className="card-type">{project.type}</p>
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
+
+                {project.videoUrl ? (
+                  <div className="video-actions">
+                    <button
+                      type="button"
+                      className="primary-btn small-btn"
+                      onClick={() => setSelectedVideoUrl(project.videoUrl ?? null)}
+                    >
+                      Play preview
+                    </button>
+                  </div>
+                ) : null}
               </article>
             ))}
           </div>
@@ -112,6 +131,40 @@ function App() {
       </main>
 
       <footer className="footer">© {currentYear} HFMJ. Crafted with React and Vite.</footer>
+
+      {selectedVideoUrl ? (
+        <div className="video-modal-backdrop" onClick={() => setSelectedVideoUrl(null)}>
+          <div className="video-modal" onClick={(event) => event.stopPropagation()}>
+            <div className="video-modal-header">
+              <h3>Project preview</h3>
+              <button
+                type="button"
+                className="secondary-btn small-btn"
+                onClick={() => setSelectedVideoUrl(null)}
+              >
+                Close
+              </button>
+            </div>
+
+            <div className="video-wrapper">
+              {selectedVideoUrl.includes('youtube.com') || selectedVideoUrl.includes('youtu.be') ? (
+                <iframe
+                  className="video-frame"
+                  src={selectedVideoUrl}
+                  title="Project video preview"
+                  allow="autoplay; fullscreen"
+                  allowFullScreen
+                />
+              ) : (
+                <video controls preload="metadata" playsInline>
+                  <source src={selectedVideoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 }
