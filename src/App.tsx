@@ -1,5 +1,12 @@
 import { useState } from 'react'
 import './App.css'
+import meImage from './assets/me.jpg'
+import angelArtworkImage from './assets/angelartwork.png'
+import obliviousArtworkImage from './assets/oblivious.png'
+import homeIcon from './assets/home.svg'
+import idIcon from './assets/id.svg'
+import folderIcon from './assets/folder.svg'
+import phoneIcon from './assets/phone.svg'
 
 const featuredVideoUrl =
   import.meta.env.VITE_YOUTUBE_VIDEO_URL ||
@@ -23,32 +30,48 @@ const websiteProjects = [
 
 const artworkPieces = [
   {
-    title: 'Neon Bloom',
+    title: 'Camila',
     medium: 'Digital illustration',
-    year: '2025',
+    year: '2022',
+    image: angelArtworkImage,
   },
   {
-    title: 'Quiet Interface',
-    medium: 'Concept art',
-    year: '2024',
+    title: 'Oblivious',
+    medium: 'Digital illustration',
+    year: '2026',
+    image: obliviousArtworkImage,
   },
-  {
-    title: 'Motion Study',
-    medium: 'Visual experiment',
-    year: '2024',
-  },
+]
+
+const navItems = [
+  { label: 'Home', href: '#home', icon: homeIcon },
+  { label: 'About', href: '#about', icon: idIcon },
+  { label: 'Projects', href: '#projects', icon: folderIcon },
+  { label: 'Contact', href: '#contact', icon: phoneIcon },
 ]
 
 function App() {
   const currentYear = new Date().getFullYear()
   const [selectedVideoUrl, setSelectedVideoUrl] = useState<string | null>(null)
+  const [selectedArtwork, setSelectedArtwork] = useState<string | null>(null)
 
   return (
     <div className="portfolio-shell">
-      <header className="hero-section">
+      <nav className="top-nav" aria-label="Primary navigation">
+        <div className="nav-links">
+          {navItems.map((item) => (
+            <a key={item.label} href={item.href} className="nav-item">
+              <img src={item.icon} alt="" className="nav-icon" aria-hidden="true" />
+              <span>{item.label}</span>
+            </a>
+          ))}
+        </div>
+      </nav>
+
+      <header id="home" className="hero-section">
         <div className="hero-copy">
-          <p className="eyebrow">Creative developer • digital storyteller</p>
-          <h1>Hi, I’m Hanie Fe — I design and create websites, apps, and art </h1>
+          <h1>Hi, I’m Hanie Fe Marie Junio </h1>
+          <h2>Website Developer & Artist</h2>
           <p className="hero-description">
             I build thoughtful digital experiences that balance visual impact with intuitive interaction.
           </p>
@@ -63,26 +86,32 @@ function App() {
         </div>
 
         <aside className="hero-card" aria-label="Portfolio highlights">
-          <p className="card-pill">Open for collaborations</p>
-          <ul>
-            <li>React and Vite builds</li>
-            <li>Website and app concepts</li>
-            <li>Digital artwork and visuals</li>
-          </ul>
+          <img src={meImage} alt="Hanie Fe" className="hero-image" />
+          
         </aside>
       </header>
 
       <main className="content">
+        <section id="about" className="section about-section">
+          <div className="section-heading">
+            <p className="eyebrow">About</p>
+            <h2>I create thoughtful digital experiences with a calm, modern feel.</h2>
+          </div>
+          <p>
+            My work blends visual design, web development, and creative direction to create interfaces
+            that feel clear, expressive, and easy to use.
+          </p>
+        </section>
+
         <section id="projects" className="section">
           <div className="section-heading">
             <p className="eyebrow">Selected work</p>
             <h2>Websites and applications</h2>
           </div>
 
-          <div className="card-grid">
+          <div className="text-stack">
             {websiteProjects.map((project) => (
-              <article className="info-card" key={project.title}>
-                <div className="card-accent" />
+              <article key={project.title}>
                 <p className="card-type">{project.type}</p>
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
@@ -109,13 +138,24 @@ function App() {
             <h2>Illustration, moodboards, and visual experiments</h2>
           </div>
 
-          <div className="art-grid">
+          <div className="text-stack artwork-stack">
             {artworkPieces.map((piece) => (
-              <article className="art-card" key={piece.title}>
-                <div className="art-visual" aria-hidden="true" />
-                <h3>{piece.title}</h3>
-                <p>{piece.medium}</p>
-                <span>{piece.year}</span>
+              <article key={piece.title} className="artwork-entry">
+                {piece.image ? (
+                  <button
+                    type="button"
+                    className="artwork-preview"
+                    onClick={() => setSelectedArtwork(piece.image)}
+                    aria-label={`View ${piece.title}`}
+                  >
+                    <img src={piece.image} alt={piece.title} />
+                  </button>
+                ) : null}
+                <div className="artwork-meta">
+                  <h3>{piece.title}</h3>
+                  <p>{piece.medium}</p>
+                  <span>{piece.year}</span>
+                </div>
               </article>
             ))}
           </div>
@@ -131,6 +171,24 @@ function App() {
       </main>
 
       <footer className="footer">© {currentYear} HFMJ. Crafted with React and Vite.</footer>
+
+      {selectedArtwork ? (
+        <div className="video-modal-backdrop" onClick={() => setSelectedArtwork(null)}>
+          <div className="video-modal artwork-modal" onClick={(event) => event.stopPropagation()}>
+            <div className="video-modal-header">
+              <h3>Artwork preview</h3>
+              <button
+                type="button"
+                className="secondary-btn small-btn"
+                onClick={() => setSelectedArtwork(null)}
+              >
+                Close
+              </button>
+            </div>
+            <img src={selectedArtwork} alt="Expanded artwork preview" className="artwork-expanded" />
+          </div>
+        </div>
+      ) : null}
 
       {selectedVideoUrl ? (
         <div className="video-modal-backdrop" onClick={() => setSelectedVideoUrl(null)}>
