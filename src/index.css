@@ -1,59 +1,38 @@
-:root {
-  font-family: 'Fredoka', 'Segoe UI', Roboto, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color: #18202b;
-  background: #93a4c1;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  --text: #18202b;
-  --text-h: #18202b;
-  --bg: #e7e8e4;
-  --border: #b1b2ae;
-  --accent: #93a4c1;
-  --accent-bg: #d3dff2;
-  --shadow: rgba(24, 32, 43, 0.12) 0 16px 40px -18px;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-* {
-  box-sizing: border-box;
-}
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
 
-html {
-  scroll-behavior: smooth;
-}
+  body {
+    @apply bg-[#d6def1] text-[#18202b] font-sans;
+  }
 
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  background: #d6def1;
-}
+  #root {
+    @apply min-h-screen;
+  }
 
-#root {
-  min-height: 100vh;
-}
+  h1,
+  h2,
+  h3,
+  p {
+    @apply m-0;
+  }
 
-h1,
-h2,
-h3,
-p {
-  margin: 0;
-}
+  h1,
+  h2,
+  h3 {
+    @apply text-[#18202b];
+  }
 
-h1,
-h2,
-h3 {
-  color: var(--text-h);
-}
+  img {
+    @apply max-w-full block;
+  }
 
-img {
-  max-width: 100%;
-  display: block;
-}
-
-a {
-  color: inherit;
+  a {
+    @apply text-inherit;
+  }
 }
