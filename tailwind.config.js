@@ -12,10 +12,12 @@ export default {
         'border': '#b1b2ae',
         'accent': '#93a4c1',
         'accent-bg': '#d3dff2',
+        'text-secondary': 'rgba(24, 32, 43, 0.8)',
+        'text-tertiary': 'rgba(24, 32, 43, 0.7)',
       },
       fontFamily: {
         'sans': ['Fredoka', 'Segoe UI', 'Roboto', 'sans-serif'],
-        'serif': ['"DM Serif Text"', 'serif'],
+        'mono': ['"Kode Mono"', 'monospace'],
       },
       backgroundColor: {
         'primary': '#d6def1',
@@ -31,5 +33,41 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          'animate-in': (value) => ({
+            animation: `slideIn ${value}`,
+          }),
+        },
+        { values: { from: '0.3s', fast: '0.2s' } }
+      )
+    },
+    function({ addComponents, theme }) {
+      addComponents({
+        '.btn-reset': {
+          '@apply border-0 p-0 bg-transparent cursor-pointer': {},
+        },
+        '.transition-scale': {
+          '@apply transition-transform duration-300 ease-out': {},
+        },
+        '.transition-scale-sm': {
+          '@apply transition-transform duration-500 ease-out': {},
+        },
+        '.kode-mono-link': {
+          '@apply font-mono font-semibold tracking-tight': {},
+        },
+        '.kode-mono-heading': {
+          '@apply font-mono font-bold tracking-wider': {},
+        },
+        '.kode-mono-tech': {
+          '@apply font-mono font-medium tracking-tight': {},
+        },
+        '.kode-mono-btn': {
+          '@apply font-mono font-semibold tracking-tight': {},
+        },
+      })
+    },
+  ],
 }
