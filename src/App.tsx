@@ -390,7 +390,7 @@ function App() {
       </nav>
 
       <div className="max-w-6xl mx-auto px-6">
-        <header id="home" className="grid grid-cols-1 md:grid-cols-[1.7fr_0.9fr] gap-10 items-center pt-40 pb-24">
+        <header id="home" className="grid grid-cols-1 md:grid-cols-[1.7fr_0.9fr] gap-10 items-center pt-[110px] pb-24">
           <div>
             <div className={`inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full border border-border/40 bg-glass text-xs font-mono text-text/80 ${ready ? 'rise rise-1' : 'opacity-0'}`}>
   <span className="relative flex h-2 w-2">
@@ -437,20 +437,20 @@ function App() {
 
           <div className={`relative max-w-[280px] mx-auto md:ml-auto md:mr-0 ${ready ? 'rise rise-5' : 'opacity-0'}`}>
             <img
-              src={meImage}
-              alt="Hanie Fe"
-              className="w-full aspect-[4/5] object-cover border-2 border-text shadow-custom"
-            />
+  src={meImage}
+  alt="Hanie Fe"
+  className="w-full aspect-[4/5] object-cover border-[4px] border-[#384C37] shadow-custom rounded-2xl"
+/>
           </div>
                   <div className={`col-span-full mt-4 ${ready ? 'rise rise-5' : 'opacity-0'}`}>
-<p className="m-0 mb-3 text-xs uppercase tracking-widest text-text/50 font-mono font-bold">Tools I Use</p>            <div className="marquee-wrapper overflow-hidden" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
+<p className="m-0 mb-3 text-xs uppercase tracking-widest  text-text/50 font-mono font-bold">Tools I Use</p>            <div className="marquee-wrapper overflow-hidden" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
               <div className="marquee-track gap-3">
                 {[...allTechKeys, ...allTechKeys].map((techKey, index) => {
                   const tech = techIcons[techKey]
                   return (
                     <span
                       key={`${techKey}-${index}`}
-                      className="tech-badge kode-mono-tech inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border/50 bg-glass text-xs text-text whitespace-nowrap shrink-0"
+                      className="tech-badge kode-mono-tech inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border-[2px] border-[#384C37] bg-glass text-xs text-text whitespace-nowrap shrink-0"
                     >
                       <img src={tech.icon} alt="" className="w-4 h-4" aria-hidden="true" />
                       {tech.label}
