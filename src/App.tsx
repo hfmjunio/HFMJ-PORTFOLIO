@@ -13,8 +13,11 @@ import reflectifyGamefc from './assets/project_assets/reflectify/gamefc.png'
 import reflectifyGamequiz from './assets/project_assets/reflectify/gamequiz.png'
 import reflectifyGenerateset from './assets/project_assets/reflectify/generateset.png'
 import reflectifyQuizzes from './assets/project_assets/reflectify/quizzes.png'
+
 import reflectifyLogoImg from './assets/project_assets/reflectify/reflectifylogo.png'
 import skypetsLogoImg from './assets/project_assets/skypets/skypetslogo.png'
+import kitkatlensLogoImg from './assets/project_assets/kitkatlens/kitkatlenslogo.jpg'
+
 import openaiLogo from './assets/project_assets/portfolio/openai.png'
 import projectsLogo from './assets/project_assets/portfolio/projects.png'
 import tsuLogo from './assets/project_assets/portfolio/tsulogo.png'
@@ -23,7 +26,6 @@ import educationLogo from './assets/project_assets/portfolio/educ.svg'
 import contactLogo from './assets/project_assets/portfolio/contact.png'
 import artworkLogo from './assets/project_assets/portfolio/artwork.svg'
 import instagramLogo from './assets/project_assets/portfolio/instagram.svg'
-
 import phLogo from './assets/project_assets/portfolio/ph.svg'
 
 
@@ -40,6 +42,8 @@ const techIcons: Record<string, { label: string; icon: string }> = {
   openai: { label: 'OpenAI GPT-4o mini', icon: openaiLogo },
   figma: { label: 'Figma', icon: 'https://cdn.simpleicons.org/figma/F24E1E' },
 }
+
+const allTechKeys = Object.keys(techIcons)
 
 function getYouTubeThumbnail(videoUrl: string): string | null {
   const match = videoUrl.match(/(?:embed\/|watch\?v=|youtu\.be\/)([\w-]{6,})/)
@@ -69,6 +73,14 @@ const websiteProjects = [
     ],
   },
   {
+  title: 'Personal Portfolio',
+  logo: hjLogoImg,
+  type: 'Personal Project',
+  description:
+    'This very site — a personal portfolio built to showcase my projects, artwork, and background, with a custom design system, smooth animations, and an image/video gallery built from scratch.',
+  stack: ['react', 'vite', 'typescript'],
+},
+  {
     title: 'SkyPets',
     logo: skypetsLogoImg,
     type: 'Case Study Project',
@@ -76,6 +88,23 @@ const websiteProjects = [
       'A memorial gallery where people can create lasting tributes for pets who have passed away, utilizing MySQL for data storage and Cloudinary for photo memory hosting.',
     stack: ['php', 'mysql', 'cloudinary', 'figma'],
     videoUrl: 'https://www.youtube.com/embed/PmhS-wPU3Zw',
+  },
+  {
+    title: 'SkyPets Official',
+    type: 'Ongoing Project',
+    status: 'ongoing',
+    description:
+      'The official, production version of SkyPets — expanding on the original case study with a live platform for creating and sharing pet memorials.',
+    stack: [],
+  },
+  {
+    title: 'kitkat.lens_',
+    logo: kitkatlensLogoImg,
+    type: 'Ongoing Project',
+    status: 'ongoing',
+    description:
+      'A landing page project currently in development.',
+    stack: [],
   },
 ]
 
@@ -94,9 +123,18 @@ const artworkPieces = [
   },
 ]
 
+//AVAILABILITY
+const availabilityStatus: 'open' | 'employed' | 'busy' = 'open'
+
+const statusConfig = {
+  open: { label: 'Open to work', color: 'bg-accent' },
+  employed: { label: 'Currently employed', color: 'bg-text/50' },
+  busy: { label: 'Not currently available', color: 'bg-text/30' },
+}
+
 const navItems = [
   { label: 'About', href: '#about' },
-  { label: 'Experience & Education', href: '#background', icon: educationLogo },
+  { label: 'Education & Experience', href: '#background', icon: educationLogo },
   { label: 'Projects', href: '#projects', icon: projectsLogo },
   { label: 'Artworks', href: '#artwork', icon: artworkLogo },
   { label: 'Contact', href: '#contact', icon: contactLogo },
@@ -254,6 +292,36 @@ function App() {
         .bg-glass:nth-child(4) { animation-delay: 0.4s; }
         .bg-glass:nth-child(5) { animation-delay: 0.5s; }
         .bg-glass:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes marquee {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+        .marquee-track {
+          display: flex;
+          width: max-content;
+          animation: marquee 25s linear infinite;
+        }
+        .marquee-wrapper:hover .marquee-track {
+          animation-play-state: paused;
+        }
+
+
+
+        ::-webkit-scrollbar-track {
+          background: #e7e8e4;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: #384C37;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: #2b3a2b;
+        }
+
+        html {
+          scrollbar-width: thin;
+          scrollbar-color: #384C37 #e7e8e4;
+        }
       `}</style>
 
       <nav
@@ -324,6 +392,13 @@ function App() {
       <div className="max-w-6xl mx-auto px-6">
         <header id="home" className="grid grid-cols-1 md:grid-cols-[1.7fr_0.9fr] gap-10 items-center pt-40 pb-24">
           <div>
+            <div className={`inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full border border-border/40 bg-glass text-xs font-mono text-text/80 ${ready ? 'rise rise-1' : 'opacity-0'}`}>
+  <span className="relative flex h-2 w-2">
+    <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${statusConfig[availabilityStatus].color}`}></span>
+    <span className={`relative inline-flex rounded-full h-2 w-2 ${statusConfig[availabilityStatus].color}`}></span>
+  </span>
+  {statusConfig[availabilityStatus].label}
+</div>
             <h2
               className={`m-0 mb-4 text-[0.95rem] tracking-wide text-text/70 font-mono ${
                 ready ? 'rise rise-1' : 'opacity-0'
@@ -348,11 +423,12 @@ function App() {
             </p>
             <div className={`flex items-center gap-6 mt-8 ${ready ? 'rise rise-4' : 'opacity-0'}`}>
               <a
-                href="#projects"
-                className="inline-flex items-center px-5 py-2.5 rounded-full bg-accent text-white text-sm font-medium no-underline transition-transform duration-200 hover:-translate-y-0.5 shadow-sm kode-mono-btn"
-              >
-                View projects
-              </a>
+                
+  href="#projects"
+  className="inline-flex items-center px-5 py-2.5 rounded-full bg-accent text-white text-sm font-medium no-underline transition-transform duration-200 hover:-translate-y-0.5 shadow-sm kode-mono-btn"
+>
+  View projects
+</a>
               <a href="#artwork" className="link-underline text-sm text-text kode-mono-btn">
                 See artwork
               </a>
@@ -365,6 +441,24 @@ function App() {
               alt="Hanie Fe"
               className="w-full aspect-[4/5] object-cover border-2 border-text shadow-custom"
             />
+          </div>
+                  <div className={`col-span-full mt-4 ${ready ? 'rise rise-5' : 'opacity-0'}`}>
+<p className="m-0 mb-3 text-xs uppercase tracking-widest text-text/50 font-mono font-bold">Tools I Use</p>            <div className="marquee-wrapper overflow-hidden" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
+              <div className="marquee-track gap-3">
+                {[...allTechKeys, ...allTechKeys].map((techKey, index) => {
+                  const tech = techIcons[techKey]
+                  return (
+                    <span
+                      key={`${techKey}-${index}`}
+                      className="tech-badge kode-mono-tech inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border/50 bg-glass text-xs text-text whitespace-nowrap shrink-0"
+                    >
+                      <img src={tech.icon} alt="" className="w-4 h-4" aria-hidden="true" />
+                      {tech.label}
+                    </span>
+                  )
+                })}
+              </div>
+            </div>
           </div>
         </header>
 
@@ -382,7 +476,7 @@ function App() {
           <section id="background" className="py-16 border-t border-border/40">
             <h2 className="m-0 mb-10 text-3xl font-bold flex items-center gap-3" style={{ fontFamily: "'Kode Mono', monospace", fontWeight: 700, letterSpacing: '-0.02em' }}>
               <img src={educationLogo} alt="" className="h-10 w-auto object-contain" />
-              Experience & Education
+              Education & Experience
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               
@@ -463,7 +557,7 @@ function App() {
           <section id="projects" className="py-16 border-t border-border/40">
             <h2 className="m-0 mb-10 text-3xl font-bold flex items-center gap-3" style={{ fontFamily: "'Kode Mono', monospace", fontWeight: 700, letterSpacing: '-0.02em' }}>
               <img src={projectsLogo} alt="" className="h-10 w-auto object-contain" />
-              Projects
+              Projects ({websiteProjects.length})
             </h2>
             <div className="grid gap-10">
               {websiteProjects.map((project) => (
@@ -472,7 +566,15 @@ function App() {
                   className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-4 pb-10 border-b border-border/40 last:border-b-0 last:pb-0"
                 >
                   <div className="flex flex-col items-center text-center md:items-center">
-                    <p className="m-0 text-sm text-text/70 font-mono">{project.type}</p>
+                    <p className="m-0 text-sm text-text/70 font-mono flex items-center gap-2">
+                      {project.type}
+                      {project.status === 'ongoing' && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-accent/15 text-accent text-[0.65rem] font-semibold uppercase tracking-wide">
+                          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+                          Ongoing
+                        </span>
+                      )}
+                    </p>                    
                     {project.logo ? (
                       <img
                         src={project.logo}
@@ -480,7 +582,7 @@ function App() {
                         className="mt-4 h-24 w-auto object-contain"
                       />
                     ) : null}
-                    <h3 className="m-0 mt-1 text-xl font-normal" style={{ fontFamily: "'Kode Mono', monospace", fontWeight: 700, letterSpacing: '-0.02em' }}>{project.title}</h3>
+                    <h3 className="m-0 mt-1 text-xl font-normal" style={{ fontFamily: "'Fredoka', sans-serif", fontWeight: 400, letterSpacing: '-0.02em' }}>{project.title}</h3>
                   </div>
                   <div>
                     <p className="text-text/80 leading-relaxed text-justify">{project.description}</p>
@@ -624,14 +726,14 @@ function App() {
               </div>
               <div className="flex items-center justify-center gap-2">
                 <img src={phLogo} alt="" className="w-5 h-5 object-contain" />
-                <p>+63 0930 315 9167</p>
+                <p color='#ffffff'>+63</p><p> 0930 315 9167</p>
               </div>
             </div>
           </section>
         </main>
 
         <footer className="text-center py-10 text-text/70 text-sm border-t border-border/40 font-mono">
-          © {currentYear} HFMJ. All rights reserved. | Built with React, TypeScript, and Vite.
+          © {currentYear} HFMJ. All rights reserved. 
         </footer>
       </div>
 
