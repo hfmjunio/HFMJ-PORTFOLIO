@@ -10,7 +10,7 @@ export default {
         'text': '#18202b',
         'bg': '#e7e8e4',
         'border': '#b1b2ae',
-        'accent': '#93a4c1',
+        'accent': '#384C37',
         'accent-bg': '#d3dff2',
         'text-secondary': 'rgba(24, 32, 43, 0.8)',
         'text-tertiary': 'rgba(24, 32, 43, 0.7)',
